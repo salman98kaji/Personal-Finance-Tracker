@@ -4,6 +4,7 @@ import com.example.DTO.BudgetRequestDTO;
 import com.example.DTO.BudgetResponseDTO;
 import com.example.Repository.BudgetRepository;
 import com.example.Repository.CategoryRepository;
+import com.example.Repository.UserRepository;
 import com.example.entities.Budget;
 import com.example.mapper.BudgetMapper;
 import org.springframework.stereotype.Service;
@@ -20,26 +21,38 @@ public class BudgetServiceImpl implements BudgetService {
     private final BudgetRepository budgetRepository;
     private final CategoryRepository categoryRepository;
     private final BudgetMapper budgetMapper;
+    private final UserRepository userRepository;
 
-    public BudgetServiceImpl(BudgetRepository budgetRepository, CategoryRepository categoryRepository, BudgetMapper budgetMapper) {
+    public BudgetServiceImpl(BudgetRepository budgetRepository, CategoryRepository categoryRepository, UserRepository userRepository,BudgetMapper budgetMapper) {
         this.budgetRepository = budgetRepository;
         this.categoryRepository = categoryRepository;
         this.budgetMapper = budgetMapper;
+        this.userRepository = userRepository;
     }
+
 
     @Override
     public BudgetResponseDTO createBudget(BudgetRequestDTO budgetRequestDTO) {
+
+        //Map the DTO to the Budget entity
         Budget budget = budgetMapper.toEntity(budgetRequestDTO);
+
+        //Set the category on the Budget entity
         budget.setCategory(categoryRepository.findById(budgetRequestDTO.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found")));
 
+        //Set the user on the Budget entity
+        budget.setUser(userRepository.findById(budgetRequestDTO.getUserId())
+                .orElseThrow(() -> new RuntimeException("USer not found")));
+
+        //Save the Budget entity and return the response DTO
         Budget savedBudget = budgetRepository.save(budget);
         return budgetMapper.toDTO(savedBudget);
     }
 
     @Override
     public List<BudgetResponseDTO> getBudgetsByCategory(Long categoryId) {
-        return budgetRepository.findByCategoryId(categoryId)
+        return budgetRepository.findByCategory_CategoryId(categoryId)
                 .stream()
                 .map(budgetMapper::toDTO)
                 .collect(Collectors.toList());

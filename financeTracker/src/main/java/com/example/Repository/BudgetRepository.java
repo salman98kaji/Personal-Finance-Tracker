@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, Long> {
-    List<Budget> findByCategoryId(Long categoryId);
+    List<Budget> findByCategory_CategoryId(Long categoryId);
 
     List<Budget> findByStartDateBeforeAndEndDateAfter(Date date1, Date date2);
 
-    boolean existsByCategoryId(Long categoryId);
+    boolean existsByCategory_CategoryId(Long categoryId);
 }

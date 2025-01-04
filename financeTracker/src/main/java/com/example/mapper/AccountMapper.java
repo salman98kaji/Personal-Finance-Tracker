@@ -10,6 +10,6 @@ import org.mapstruct.Mapping;
 public interface AccountMapper {
     Account toEntity(AccountRequestDTO dto);
 
-    @Mapping(source = "user.username", target = "userName", ignore = true) // Add if needed to expose related user info
+    @Mapping(target = "userName", source = "user.username")
     AccountResponseDTO toDTO(Account account);
 }

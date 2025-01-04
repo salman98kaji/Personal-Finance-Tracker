@@ -19,4 +19,7 @@ public class BudgetRequestDTO {
     @NotNull
     private Date endDate;
 
+    @NotNull
+    private Long userId;
+
 }

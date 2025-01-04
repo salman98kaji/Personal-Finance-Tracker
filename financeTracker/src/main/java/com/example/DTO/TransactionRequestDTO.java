@@ -1,5 +1,6 @@
 package com.example.DTO;
 
+import com.example.entities.Enums;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class TransactionRequestDTO {
     private Long categoryId;
 
     @NotBlank
-    private String transactionType; // ENUM: "income", "expense"
+    private Enums.TransactionType transactionType; // ENUM: "income", "expense"
 
     @NotNull
     private double amount;

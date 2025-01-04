@@ -1,16 +1,39 @@
 package com.example.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class Enums {
 
+    @Schema(description = "Different types of accounts")
     public enum AccountType {
-        SAVINGS, CHECKING, CREDIT, CASH
+        @Schema(description = "Savings account")
+        SAVINGS,
+
+        @Schema(description = "Checking account")
+        CHECKING,
+
+        @Schema(description = "Credit account")
+        CREDIT,
+
+        @Schema(description = "Cash account")
+        CASH
     }
 
+    @Schema(description = "Different types of categories")
     public enum CategoryType {
-        INCOME, EXPENSE
+        @Schema(description = "Income category")
+        INCOME,
+
+        @Schema(description = "Expense category")
+        EXPENSE
     }
 
+    @Schema(description = "Different types of transactions")
     public enum TransactionType {
-        INCOME, EXPENSE
+        @Schema(description = "Income transaction")
+        INCOME,
+
+        @Schema(description = "Expense transaction")
+        EXPENSE
     }
 }

@@ -1,5 +1,7 @@
 package com.example.DTO;
 
+import com.example.entities.Enums;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -9,5 +11,6 @@ public class CategoryRequestDTO {
     private String categoryName;
 
     @NotBlank
-    private String categoryType;
+    @Schema(description = "The type of the category")
+    private Enums.CategoryType categoryType;
 }

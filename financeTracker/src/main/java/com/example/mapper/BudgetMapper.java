@@ -5,6 +5,7 @@ import com.example.DTO.BudgetResponseDTO;
 import com.example.entities.Budget;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
 @Mapper(componentModel = "spring")
 public interface BudgetMapper {
     Budget toEntity(BudgetRequestDTO dto);

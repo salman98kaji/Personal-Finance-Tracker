@@ -8,4 +8,5 @@ public class AccountResponseDTO {
     private String accountName;
     private String accountType;
     private double balance;
+    private String userName;
 }
