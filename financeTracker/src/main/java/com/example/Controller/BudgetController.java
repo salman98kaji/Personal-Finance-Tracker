@@ -3,6 +3,7 @@ package com.example.Controller;
 import com.example.DTO.BudgetRequestDTO;
 import com.example.DTO.BudgetResponseDTO;
 import com.example.Service.BudgetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/budgets")
 public class BudgetController {
-    private final BudgetService budgetService;
 
-    public BudgetController(BudgetService budgetService) {
-        this.budgetService = budgetService;
-    }
+    @Autowired
+    private BudgetService budgetService;
+
+//    public BudgetController(BudgetService budgetService) {
+//        this.budgetService = budgetService;
+//    }
 
     @PostMapping
     public ResponseEntity<BudgetResponseDTO> addBudget(@RequestBody BudgetRequestDTO budgetRequestDTO){

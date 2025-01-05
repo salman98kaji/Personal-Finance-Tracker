@@ -7,6 +7,7 @@ import com.example.Repository.CategoryRepository;
 import com.example.Repository.UserRepository;
 import com.example.entities.Budget;
 import com.example.mapper.BudgetMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -18,18 +19,17 @@ import java.util.stream.Collectors;
 @Service
 public class BudgetServiceImpl implements BudgetService {
 
-    private final BudgetRepository budgetRepository;
-    private final CategoryRepository categoryRepository;
-    private final BudgetMapper budgetMapper;
-    private final UserRepository userRepository;
+    @Autowired
+    private BudgetRepository budgetRepository;
 
-    public BudgetServiceImpl(BudgetRepository budgetRepository, CategoryRepository categoryRepository, UserRepository userRepository,BudgetMapper budgetMapper) {
-        this.budgetRepository = budgetRepository;
-        this.categoryRepository = categoryRepository;
-        this.budgetMapper = budgetMapper;
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private CategoryRepository categoryRepository;
 
+    @Autowired
+    private BudgetMapper budgetMapper;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public BudgetResponseDTO createBudget(BudgetRequestDTO budgetRequestDTO) {

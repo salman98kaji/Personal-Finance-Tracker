@@ -3,6 +3,7 @@ package com.example.Controller;
 import com.example.DTO.TransactionRequestDTO;
 import com.example.DTO.TransactionResponseDTO;
 import com.example.Service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
-    private final TransactionService transactionService;
 
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
+    @Autowired
+    private TransactionService transactionService;
+
+//    public TransactionController(TransactionService transactionService) {
+//        this.transactionService = transactionService;
+//    }
 
     @PostMapping
     public ResponseEntity<TransactionResponseDTO> addTransaction(@RequestBody TransactionRequestDTO transactionRequestDTO) {

@@ -18,16 +18,21 @@ import static java.util.Arrays.stream;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
-    private final UserRepository userRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private AccountMapper accountMapper;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
-    public AccountServiceImpl(AccountRepository accountRepository, UserRepository userRepository, AccountMapper accountMapper){
-        this.accountRepository = accountRepository;
-        this.accountMapper = accountMapper;
-        this.userRepository = userRepository;
-    }
+//    public AccountServiceImpl(AccountRepository accountRepository, UserRepository userRepository, AccountMapper accountMapper){
+//        this.accountRepository = accountRepository;
+//        this.accountMapper = accountMapper;
+//        this.userRepository = userRepository;
+//    }
 
     @Override
     public AccountResponseDTO createAccount(Long userId, AccountRequestDTO accountRequestDTO) {

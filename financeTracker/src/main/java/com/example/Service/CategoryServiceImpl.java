@@ -5,6 +5,7 @@ import com.example.DTO.CategoryResponseDTO;
 import com.example.Repository.CategoryRepository;
 import com.example.entities.Category;
 import com.example.mapper.CategoryMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +13,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
-        this.categoryRepository = categoryRepository;
-        this.categoryMapper = categoryMapper;
-    }
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
+
+//    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+//        this.categoryRepository = categoryRepository;
+//        this.categoryMapper = categoryMapper;
+//    }
 
     @Override
     public CategoryResponseDTO createCategory(CategoryRequestDTO categoryRequestDTO) {

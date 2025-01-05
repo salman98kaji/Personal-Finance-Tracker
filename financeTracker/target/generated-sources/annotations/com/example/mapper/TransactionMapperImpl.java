@@ -4,14 +4,13 @@ import com.example.DTO.TransactionRequestDTO;
 import com.example.DTO.TransactionResponseDTO;
 import com.example.entities.Account;
 import com.example.entities.Category;
-import com.example.entities.Enums;
 import com.example.entities.Transaction;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-01-04T14:30:40+0530",
+    date = "2025-01-05T17:20:48+0530",
     comments = "version: 1.6.2, compiler: javac, environment: Java 17.0.10 (Oracle Corporation)"
 )
 @Component
@@ -25,9 +24,7 @@ public class TransactionMapperImpl implements TransactionMapper {
 
         Transaction transaction = new Transaction();
 
-        if ( dto.getTransactionType() != null ) {
-            transaction.setTransactionType( Enum.valueOf( Enums.TransactionType.class, dto.getTransactionType() ) );
-        }
+        transaction.setTransactionType( dto.getTransactionType() );
         transaction.setAmount( dto.getAmount() );
         transaction.setTransactionDate( dto.getTransactionDate() );
         transaction.setDescription( dto.getDescription() );
