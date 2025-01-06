@@ -3,6 +3,7 @@ package com.example.Controller;
 import com.example.DTO.CategoryRequestDTO;
 import com.example.DTO.CategoryResponseDTO;
 import com.example.Service.CategoryService;
+import com.example.entities.Enums;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,6 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
-
-//    public CategoryController(CategoryService categoryService) {
-//        this.categoryService = categoryService;
-//    }
 
     @PostMapping
     public ResponseEntity<CategoryResponseDTO> addCategory(@RequestBody CategoryRequestDTO categoryRequestDTO){
@@ -33,7 +30,7 @@ public class CategoryController {
     }
 
     @GetMapping("/type/{categoryType}")
-    public ResponseEntity<List<CategoryResponseDTO>> getAllCategoriesByType(@PathVariable String categoryType){
+    public ResponseEntity<List<CategoryResponseDTO>> getAllCategoriesByType(@PathVariable Enums.CategoryType categoryType){
         List<CategoryResponseDTO> categories = categoryService.getCategoriesByType(categoryType);
         return ResponseEntity.ok(categories);
     }

@@ -32,7 +32,7 @@ public class BudgetServiceImpl implements BudgetService {
     private UserRepository userRepository;
 
     @Override
-    public BudgetResponseDTO createBudget(BudgetRequestDTO budgetRequestDTO) {
+    public BudgetResponseDTO createBudget(String username, BudgetRequestDTO budgetRequestDTO) {
 
         //Map the DTO to the Budget entity
         Budget budget = budgetMapper.toEntity(budgetRequestDTO);

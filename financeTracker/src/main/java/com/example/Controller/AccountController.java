@@ -16,10 +16,6 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-//    public AccountController(AccountService accountService) {
-//        this.accountService = accountService;
-//    }
-
     @PostMapping("/{userId}")
     public ResponseEntity<AccountResponseDTO> createAccount(@PathVariable Long userId, @RequestBody AccountRequestDTO accountRequestDTO) {
         AccountResponseDTO accountResponse = accountService.createAccount(userId, accountRequestDTO);

@@ -5,6 +5,8 @@ import com.example.DTO.BudgetResponseDTO;
 import com.example.Service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +18,10 @@ public class BudgetController {
     @Autowired
     private BudgetService budgetService;
 
-//    public BudgetController(BudgetService budgetService) {
-//        this.budgetService = budgetService;
-//    }
-
     @PostMapping
-    public ResponseEntity<BudgetResponseDTO> addBudget(@RequestBody BudgetRequestDTO budgetRequestDTO){
-        BudgetResponseDTO budgetResponse = budgetService.createBudget(budgetRequestDTO);
+    public ResponseEntity<BudgetResponseDTO> addBudget(@AuthenticationPrincipal UserDetails userDetails, @RequestBody BudgetRequestDTO budgetRequestDTO){
+        String username = userDetails.getUsername();
+        BudgetResponseDTO budgetResponse = budgetService.createBudget(username, budgetRequestDTO);
         return ResponseEntity.ok(budgetResponse);
     }
 

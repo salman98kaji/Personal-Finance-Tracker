@@ -4,6 +4,7 @@ import com.example.DTO.CategoryRequestDTO;
 import com.example.DTO.CategoryResponseDTO;
 import com.example.Repository.CategoryRepository;
 import com.example.entities.Category;
+import com.example.entities.Enums;
 import com.example.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
-
-//    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
-//        this.categoryRepository = categoryRepository;
-//        this.categoryMapper = categoryMapper;
-//    }
 
     @Override
     public CategoryResponseDTO createCategory(CategoryRequestDTO categoryRequestDTO) {
@@ -44,8 +40,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponseDTO> getCategoriesByType(String categoryType) {
-        return categoryRepository.findByCategoryType(categoryType)
+    public List<CategoryResponseDTO> getCategoriesByType(Enums.CategoryType categoryType) {
+        return categoryRepository.findByCategoryType(Enums.CategoryType.valueOf(String.valueOf(categoryType)))
                 .stream()
                 .map(categoryMapper::toDTO)
                 .collect(Collectors.toList());
