@@ -6,7 +6,7 @@ import com.example.DTO.BudgetResponseDTO;
 import java.util.List;
 
 public interface BudgetService {
-    BudgetResponseDTO createBudget(String username, BudgetRequestDTO budgetRequestDTO);
+    BudgetResponseDTO createBudget(BudgetRequestDTO budgetRequestDTO, String userName);
 
     List<BudgetResponseDTO> getBudgetsByCategory(Long categoryId);
 
