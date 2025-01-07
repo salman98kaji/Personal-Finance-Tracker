@@ -6,9 +6,12 @@ import com.example.Repository.BudgetRepository;
 import com.example.Repository.CategoryRepository;
 import com.example.Repository.UserRepository;
 import com.example.entities.Budget;
+import com.example.entities.Category;
+import com.example.entities.User;
 import com.example.mapper.BudgetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,33 +34,47 @@ public class BudgetServiceImpl implements BudgetService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     @Override
     public BudgetResponseDTO createBudget(BudgetRequestDTO budgetRequestDTO, String userName) {
 
-        User
+        User user = userRepository.findByUsername(userName);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found for username: " + userName);
+        }
+
+        Category category = categoryRepository.findById(budgetRequestDTO.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found for id: "+budgetRequestDTO.getCategoryId()));
+
         //Map the DTO to the Budget entity
         Budget budget = budgetMapper.toEntity(budgetRequestDTO);
 
-        //Set the category on the Budget entity
-        budget.setCategory(categoryRepository.findById(budgetRequestDTO.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found")));
-
-        //Set the user on the Budget entity
-        budget.setUser(userRepository.findById(budgetRequestDTO.getUserId())
-                .orElseThrow(() -> new RuntimeException("USer not found")));
+        // Set the User and Category in the Budget entity
+        budget.setUser(user);
+        budget.setCategory(category);
 
         //Save the Budget entity and return the response DTO
         Budget savedBudget = budgetRepository.save(budget);
+
         return budgetMapper.toDTO(savedBudget);
     }
 
     @Override
-    public List<BudgetResponseDTO> getBudgetsByCategory(Long categoryId) {
-        return budgetRepository.findByCategory_CategoryId(categoryId)
-                .stream()
+    @Transactional
+    public List<BudgetResponseDTO> getAllBudgetsForUser(String username) {
+        List<Budget> budgets = budgetRepository.findByUserUsername(username);
+        return budgets.stream()
                 .map(budgetMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+//    @Override
+//    public List<BudgetResponseDTO> getBudgetsByCategory(Long categoryId) {
+//        return budgetRepository.findByCategory_CategoryId(categoryId)
+//                .stream()
+//                .map(budgetMapper::toDTO)
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public List<BudgetResponseDTO> getBudgetsWithinDateRange(String startDate, String endDate){

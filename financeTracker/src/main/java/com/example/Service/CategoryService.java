@@ -7,7 +7,7 @@ import com.example.entities.Enums;
 import java.util.List;
 
 public interface CategoryService {
-    CategoryResponseDTO createCategory(CategoryRequestDTO categoryRequestDTO);
-    List<CategoryResponseDTO> getAllCategories();
+    CategoryResponseDTO createCategory(String username, CategoryRequestDTO categoryRequestDTO);
+    List<CategoryResponseDTO> getAllCategoriesByUser(String username);
     List<CategoryResponseDTO> getCategoriesByType(Enums.CategoryType categoryType);
 }

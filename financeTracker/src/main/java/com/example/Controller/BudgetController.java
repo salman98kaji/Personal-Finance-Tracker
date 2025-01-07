@@ -26,9 +26,16 @@ public class BudgetController {
         return ResponseEntity.ok(budgetResponse);
     }
 
-    @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<BudgetResponseDTO>> getBudgetByCategory(@PathVariable Long categoryId){
-        List<BudgetResponseDTO> budgets = budgetService.getBudgetsByCategory(categoryId);
+//    @GetMapping
+//    public ResponseEntity<List<BudgetResponseDTO>> getBudgetByCategory(@PathVariable Long categoryId){
+//        List<BudgetResponseDTO> budgets = budgetService.getBudgetsByCategory(categoryId);
+//        return ResponseEntity.ok(budgets);
+//    }
+    @GetMapping
+    public ResponseEntity<List<BudgetResponseDTO>> getAllBudgetsForUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        List<BudgetResponseDTO> budgets = budgetService.getAllBudgetsForUser(userName);
         return ResponseEntity.ok(budgets);
     }
 

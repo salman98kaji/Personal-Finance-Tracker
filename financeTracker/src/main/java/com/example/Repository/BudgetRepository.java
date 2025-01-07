@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, Long> {
-    List<Budget> findByCategory_CategoryId(Long categoryId);
+    List<Budget> findByUserUsername(String username);
 
     List<Budget> findByStartDateBeforeAndEndDateAfter(Date date1, Date date2);
 

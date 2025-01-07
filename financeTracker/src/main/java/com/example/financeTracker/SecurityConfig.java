@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/id/**").authenticated()
                         .requestMatchers("/api/accounts/**").authenticated()
                         .requestMatchers("/api/budgets/**").authenticated()
-                        .requestMatchers("/api/category/**").permitAll()
+                        .requestMatchers("/api/category/**").authenticated()
                         .requestMatchers("/api/transactions/**").authenticated()
                         .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())

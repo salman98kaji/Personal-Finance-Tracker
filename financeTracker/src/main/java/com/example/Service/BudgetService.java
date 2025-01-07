@@ -8,7 +8,7 @@ import java.util.List;
 public interface BudgetService {
     BudgetResponseDTO createBudget(BudgetRequestDTO budgetRequestDTO, String userName);
 
-    List<BudgetResponseDTO> getBudgetsByCategory(Long categoryId);
+    List<BudgetResponseDTO> getAllBudgetsForUser(String username);
 
     List<BudgetResponseDTO> getBudgetsWithinDateRange(String startDate, String endDate);
 }

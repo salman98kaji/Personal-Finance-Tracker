@@ -6,6 +6,6 @@ import com.example.DTO.AccountResponseDTO;
 import java.util.List;
 
 public interface AccountService {
-    AccountResponseDTO createAccount(Long userId, AccountRequestDTO accountRequestDTO);
-    List<AccountResponseDTO> getAccountsByUserId(Long userId);
+    AccountResponseDTO createAccount(String authenticatedUsername, AccountRequestDTO accountRequestDTO);
+    List<AccountResponseDTO> getAccountsByAuthenticatedUsername(String username);
 }

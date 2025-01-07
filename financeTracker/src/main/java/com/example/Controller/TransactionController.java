@@ -5,6 +5,8 @@ import com.example.DTO.TransactionResponseDTO;
 import com.example.Service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +24,18 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<TransactionResponseDTO> addTransaction(@RequestBody TransactionRequestDTO transactionRequestDTO) {
-        TransactionResponseDTO transactionResponse = transactionService.addTransaction(transactionRequestDTO);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        TransactionResponseDTO transactionResponse = transactionService.addTransaction(username, transactionRequestDTO);
         return ResponseEntity.ok(transactionResponse);
     }
 
     @GetMapping("/account/{accountId}")
     public  ResponseEntity<List<TransactionResponseDTO>> getTransactionsByAccountId(@PathVariable Long accountId){
-        List<TransactionResponseDTO> transactions = transactionService.getTransactionByAccountId(accountId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        List<TransactionResponseDTO> transactions = transactionService.getAllTransactionsByAccount(username, accountId);
         return ResponseEntity.ok(transactions);
     }
 }

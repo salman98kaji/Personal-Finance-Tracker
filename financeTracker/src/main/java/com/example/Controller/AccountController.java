@@ -5,6 +5,8 @@ import com.example.DTO.AccountResponseDTO;
 import com.example.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +18,26 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<AccountResponseDTO> createAccount(@PathVariable Long userId, @RequestBody AccountRequestDTO accountRequestDTO) {
-        AccountResponseDTO accountResponse = accountService.createAccount(userId, accountRequestDTO);
+    @PostMapping
+    public ResponseEntity<AccountResponseDTO> createAccount(@RequestBody AccountRequestDTO accountRequestDTO) {
+
+        //Get the authenticated users username
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedUsername = authentication.getName();
+
+        //create account for the authenticated user
+        AccountResponseDTO accountResponse = accountService.createAccount(authenticatedUsername, accountRequestDTO);
         return ResponseEntity.ok(accountResponse);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<AccountResponseDTO>> getAccountsByUserId(@PathVariable Long userId){
-        List<AccountResponseDTO> accounts = accountService.getAccountsByUserId(userId);
+    @GetMapping
+    public ResponseEntity<List<AccountResponseDTO>> getAccountsByAuthenticatedUser(){
+        // Get the authenticated user's username
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedUserName = authentication.getName();
+
+        //fetch accounts by the authenticated user
+        List<AccountResponseDTO> accounts = accountService.getAccountsByAuthenticatedUsername(authenticatedUserName);
         return ResponseEntity.ok(accounts);
     }
 }

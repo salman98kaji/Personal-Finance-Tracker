@@ -21,6 +21,10 @@ public class Category {
     @Column(nullable = false)
     private Enums.CategoryType categoryType;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions;
 
