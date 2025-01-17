@@ -34,7 +34,18 @@ public class JwtFilter extends OncePerRequestFilter {
         //Extract the JWT and Username
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
             jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+            try {
+            	username = jwtUtil.extractUsername(jwt);
+            	System.out.println("JWT Token: " + jwt);
+            } catch (Exception e){
+            	// Handle cases where the JWT is malformed or invalid
+                System.out.println("Invalid JWT: " + e.getMessage());
+            }
+            
+        } else if (authorizationHeader == null) {
+            System.out.println("Missing Authorization header");
+        } else {
+            System.out.println("Invalid Authorization header format");
         }
 
         //Validate the JWT and Authenticate the User

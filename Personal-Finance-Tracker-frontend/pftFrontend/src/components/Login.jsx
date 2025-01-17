@@ -26,6 +26,7 @@ function Login() {
 
             // Store the token in localStorage (or sessionStorage)
             localStorage.setItem('jwtToken', token);
+            console.log('Token stored successfully:', token);
 
             // Clear any previous error messages
             setError('');

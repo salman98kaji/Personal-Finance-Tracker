@@ -40,4 +40,22 @@ public class AccountController {
         List<AccountResponseDTO> accounts = accountService.getAccountsByAuthenticatedUsername(authenticatedUserName);
         return ResponseEntity.ok(accounts);
     }
+
+    @PutMapping("/{accountId}")
+    public ResponseEntity<AccountResponseDTO> updateAccount(@PathVariable Long accountId, @RequestBody AccountRequestDTO accountRequestDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedUsername = authentication.getName();
+
+        AccountResponseDTO updatedAccount = accountService.updateAccount(authenticatedUsername, accountId, accountRequestDTO);
+        return ResponseEntity.ok(updatedAccount);
+    }
+
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<String> deleteAccount(@PathVariable Long accountId ){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedUsername = authentication.getName();
+
+        accountService.deleteAccount(authenticatedUsername, accountId);
+        return ResponseEntity.ok("Account Deleted Successfully");
+    }
 }

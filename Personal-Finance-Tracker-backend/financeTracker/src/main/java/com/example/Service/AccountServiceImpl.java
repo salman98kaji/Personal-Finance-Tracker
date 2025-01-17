@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
+@Transactional
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -59,14 +60,31 @@ public class AccountServiceImpl implements AccountService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<AccountResponseDTO> getAccountsByAuthentica(Long userId) {
-//        if(!userRepository.existsById(userId)) {
-//            throw new RuntimeException("User not found");
-//        }
-//        return accountRepository.findByUser_UserId(userId)
-//                .stream()
-//                .map(accountMapper::toDTO)
-//                .collect(Collectors.toList());
-//    }
+    @Override
+    public AccountResponseDTO updateAccount(String authenticatedUsername, Long accountId, AccountRequestDTO accountRequestDTO) {
+        // Fetch the user by username
+        User user = userRepository.findByUsername(authenticatedUsername);
+        // Find the account by ID and associated user
+        Account account = accountRepository.findByAccountIdAndUser(accountId, user)
+                .orElseThrow(() -> new RuntimeException("Account not found or does not belong to the user"));
+        // Update account details
+        account.setAccountName(accountRequestDTO.getAccountName());
+        account.setBalance(accountRequestDTO.getBalance());
+        // Save the updated account to the repository
+        Account updatedAccount = accountRepository.save(account);
+        // Map the updated entity to the response DTO and return it
+        return accountMapper.toDTO(updatedAccount);
+    }
+
+    @Override
+    public void deleteAccount(String authenticatedUsername, Long accountId) {
+        // Fetch the user by username
+        User user = userRepository.findByUsername(authenticatedUsername);
+        // Find the account by ID and associated user
+        Account account = accountRepository.findByAccountIdAndUser(accountId, user)
+                .orElseThrow(()-> new RuntimeException("Account not found or does not belong to the user"));
+        // Delete the account
+        accountRepository.delete(account);
+        System.out.println("Deleted account with ID: " + accountId + " for user: " + authenticatedUsername);
+    }
 }
